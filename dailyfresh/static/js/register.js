@@ -9,18 +9,22 @@ $(function(){
 
 	$('#user_name').blur(function() {
 		check_user_name();
+
 	});
 
 	$('#pwd').blur(function() {
 		check_pwd();
+
 	});
 
 	$('#cpwd').blur(function() {
 		check_cpwd();
+
 	});
 
 	$('#email').blur(function() {
 		check_email();
+
 	});
 
 	$('#allow').click(function() {
@@ -48,11 +52,22 @@ $(function(){
 		}
 		else
 		{
-			$('#user_name').next().hide();
-			error_name = false;
-		}
+			// $('#user_name').next().hide();
+			// error_name = false;
+			$.get('/register_hies/',{'uname': $('#user_name').val()}, function (data) {
+				if(data.hies >=1 )
+				{
+					$('#user_name').next().html('用户以存在').show();
+					error_name = true;
+				}
+				else
+				{
+					$('#user_name').next().hide();
+					error_name = false;
+				}
+            });
+		};
 	}
-
 	function check_pwd(){
 		var len = $('#pwd').val().length;
 		if(len<8||len>20)
@@ -63,10 +78,23 @@ $(function(){
 		}
 		else
 		{
-			$('#pwd').next().hide();
-			error_password = false;
-		}		
-	}
+			// $('#pwd').next().hide();
+			// error_password = false;
+			$.get('/login_pwd/',{'upwd': $('#pwd').val()}, function (data) {
+				if(data.upwd == 1)
+				{
+					$('#pwd').next().hide();
+					error_password = false;
+
+				}
+				else
+				{
+					$('#pwd').next().html('密码不对').show();
+					error_password = true;
+				};
+            });
+		};
+	};
 
 
 	function check_cpwd(){
@@ -113,10 +141,12 @@ $(function(){
 
 		if(error_name == false && error_password == false && error_check_password == false && error_email == false && error_check == false)
 		{
+			alert(999)
 			return true;
 		}
 		else
 		{
+			alert(8888)
 			return false;
 		}
 
