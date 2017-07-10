@@ -1,10 +1,102 @@
 {%extends 'jicheng.html'%}
+
 {%block head%}
-<script type="text/javascript" src="/static/js/register.js"></script>
+<script>
+	//首先　设置全局变量
+	name_ok = true;
+	pwd_ok = true;
+
+	$(function () {
+	    $('.name_input').blur(function () {
+
+//			uname = $(this).val()
+//			if(uname.length < 5 || uname.length > 20){
+//			    $('.user_error').html('账户为5-20位').show();
+//			    name_ok = false;
+//
+//			}
+//			else {
+//			    $('.user_error').html('').hide();
+//			    name_ok = true;
+//			}
+//        });
+			$('.name_input').html('').val();
+			var len = $('.name_input').val().length;
+
+			if(len < 5 || len > 20){
+				$('.user_error').html('账户为5-20位').show();
+
+					name_ok = false;
+			}
+			else {
+				$('.user_error').html('').hide();
+
+					name_ok = true;
+			}
+		});
+
+	    $('.pass_input').blur(function () {
+	        upwd = $(this).val()
+			if(upwd.length < 8 || upwd.length >20) {
+	            $('.pwd_error').html('密码为8-20位').show();
+	            pwd_ok = false;
+			}
+			else {
+	            $('.pwd_error').html('').hide();
+	            pwd_ok = true;
+
+			}
+
+        });
+	    $('#ti_jiao').submit(function () {
+	        // 如果全局变量全是true,说明输入的内容符合以上条件，true ,允许可以提交，否则不允许.这是做个一个判断
+			if(name_ok == true && pwd_ok == true){
+			    return true;
+
+			}
+			else {
+			    return false;
+			}
+			//输入的用户名和密码，返回true。
+//			$('.name_input').blur();
+//			$('.pwd_error').blur();
+//			return name_ok && pwd_ok
+
+        });
+
+
+	    if('{{name_error}}' == '1'){
+
+	        $('.user_error').html('用户名不对').show();
+	        name_ok = false;
+		}
+		else {
+	        $('.user_error').html('').hide();
+	        name_ok = true;
+		}
+		if('{{pwd_error}}' == '1'){
+	        $('.pwd_error').html('密码不对').show();
+	        name_ok = false;
+		}
+		else {
+		    $('.pwd_error').html('').hide();
+		    name_ok = true;
+		}
+
+
+    });
+
+
+
+
+</script>
+
+
 {%endblock head%}
+
 {%block body%}
 	<div class="login_top clearfix">
-		<a href="../index.html" class="login_logo"><img src="/static/images/logo02.png"></a>
+		<a href="../ttsx_goods/index.html" class="login_logo"><img src="/static/images/logo02.png"></a>
 	</div>
 
 	<div class="login_form_bg">
@@ -17,17 +109,19 @@
 					<a href="/register/">立即注册</a>
 				</div>
 				<div class="form_input">
-					<form>
-						<input type="text" name="username" class="name_input" placeholder="请输入用户名">
+
+					<form method="post" action="/login_yz/" id="ti_jiao">
+						{%csrf_token%}
+						<input type="text" name="username" value="{{uname}}" class="name_input" placeholder="请输入用户名">
 						<div class="user_error">输入错误</div>
-						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码" id="pwd">
+						<input type="password" name="pwd" value="{{upwd}}" class="pass_input" placeholder="请输入密码">
 						<div class="pwd_error">输入错误</div>
 						<div class="more_input clearfix">
-							<input type="checkbox" name="cookie_yhm" checked="checked">
+							<input type="checkbox" name="unamejz" value="1" checked="checked">
 							<label>记住用户名</label>
 							<a href="#">忘记密码</a>
 						</div>
-						<input type="submit" name="uname" value="登录" class="input_submit">
+						<input type="submit"  value="登录" class="input_submit">
 					</form>
 				</div>
 			</div>

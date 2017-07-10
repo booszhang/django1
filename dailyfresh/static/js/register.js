@@ -78,21 +78,21 @@ $(function(){
 		}
 		else
 		{
-			// $('#pwd').next().hide();
-			// error_password = false;
-			$.get('/login_pwd/',{'upwd': $('#pwd').val()}, function (data) {
-				if(data.upwd == 1)
-				{
-					$('#pwd').next().hide();
-					error_password = false;
-
-				}
-				else
-				{
-					$('#pwd').next().html('密码不对').show();
-					error_password = true;
-				};
-            });
+			$('#pwd').next().hide();
+			error_password = false;
+			// $.get('/login_pwd/',{'upwd': $('#pwd').val()}, function (data) {
+			// 	if(data.upwd == 1)
+			// 	{
+			// 		$('#pwd').next().hide();
+			// 		error_password = false;
+            //
+			// 	}
+			// 	else
+			// 	{
+			// 		$('#pwd').next().html('密码不对').show();
+			// 		error_password = true;
+			// 	};
+            // });
 		};
 	};
 
@@ -141,12 +141,12 @@ $(function(){
 
 		if(error_name == false && error_password == false && error_check_password == false && error_email == false && error_check == false)
 		{
-			alert(999)
+
 			return true;
 		}
 		else
 		{
-			alert(8888)
+
 			return false;
 		}
 
